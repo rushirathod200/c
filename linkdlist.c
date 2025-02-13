@@ -1,4 +1,4 @@
-	#include<stdio.h>
+#include<stdio.h>
 #include<stdlib.h>
 
 struct node
@@ -7,6 +7,7 @@ struct node
 	struct node *next;
 }*first;
 
+int size;
 //insert inbigning
 void begininsert(int value)
 {
@@ -24,6 +25,7 @@ void begininsert(int value)
 		avail=avail->next;
 		newnode->data=value;
 		printf("inserted value:%d\n",newnode->data);
+		size++;
 		
 		if(first==NULL)
 		{
@@ -55,6 +57,7 @@ void insertlast(int value)
 		newnode->data=value;
 		newnode->next=NULL;
 		printf("inserted value:%d\n",newnode->data);
+		size++;
 	}
 	if(first==NULL)
 	{
@@ -93,6 +96,7 @@ void posinsert(int pos,int value)
 		newnode->next = first;
 		first=newnode;
 		printf("Inserted value:%d",newnode->data);
+		size++;
 		return;
 	}
 	int i=1;
@@ -116,6 +120,7 @@ void posinsert(int pos,int value)
 //	newnode->next=ptr;
 //	preptr->next=newnode;
 	printf("Inserted value:%d\n",newnode->data);
+	size++;
 	
 }
 
@@ -130,6 +135,8 @@ void display()
 		printf("%d\n",ptr->data);
 		ptr=ptr->next;
 	}
+	printf("\t\t\t\t\tNo of node is : %d\n",size);
+
 }
 
 //Delete first
@@ -152,6 +159,7 @@ void deletefirst()
 		printf("deleted value:%d",first);
 		first=ptr->next;
 		free(ptr);
+		size--;
 		return;
 	}
 }
@@ -166,6 +174,7 @@ void deletelast(){
 	{
 		free(first);
 		first=NULL;
+		size--;
 	}
 	else{
 		
@@ -179,6 +188,7 @@ void deletelast(){
 		
 		preptr->next=NULL;
 		free(ptr);
+		size--;
 	}
 	
 }
@@ -206,9 +216,6 @@ int search(int ele){
 		printf("not found it\n ");
 	    return 0;
 	}
-	
-	
-	
 }
 
 void deleteatspacific(int ind){
@@ -226,6 +233,7 @@ void deleteatspacific(int ind){
 	     
 	     preptr->next=ptr->next;
 	     free(ptr);
+	     size--;
 	}
     
     
@@ -236,7 +244,7 @@ void main()
 	int choice,n,pos,x;
 	while(1)
 	{
-		printf("Enter your choice:\n1)insert at bigning\n2)insert at last\n3)insert at specific position\n4)display\n5)delete first\n6)delete last\n7)find ele\n)8 delete_at_spacific\n0)exit\n");
+		printf("Enter your choice:\n1)insert at bigning\n2)insert at last\n3)insert at specific position\n4)display\n5)delete first\n6)delete last\n7)find ele\n8)delete_at_spacific\n0)exit\n");
 		scanf("%d",&choice);
 		switch(choice)
 		{
@@ -244,12 +252,14 @@ void main()
 				printf("entre insert value:");
 				scanf("%d",&n);
 				begininsert(n);
+				display();
 				break;
 				
 			case 2:
 				printf("entre insert value:");
 				scanf("%d",&n);
 				insertlast(n);
+				display();
 				break;
 				
 			case 3:
@@ -258,6 +268,7 @@ void main()
 				printf("enter value:");
 				scanf("%d",&n);
 				posinsert(pos,n);
+				display();
 				break;
 				
 			case 4:
@@ -265,22 +276,26 @@ void main()
 				break;
 			case 5:
 				deletefirst();
+				display();
 				break;
 			case 0:
 				return;
 				break;
 			case 6:
 				deletelast();
+				display();
 				break;
 			case 7:
 				printf("enter value:");
 				scanf("%d",&n);
 				printf("index is %d\n",search(n));
+				display();
 				break;
 			case 8:
 				printf("enter value:");
 				scanf("%d",&x);
 				deleteatspacific(x);
+				display();
 				break;
 				
 			default:
