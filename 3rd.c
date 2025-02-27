@@ -1,4 +1,3 @@
-// Online C compiler to run C program online
 #include <stdio.h>
 #include <stdlib.h>  
 #include <time.h>
@@ -8,19 +7,20 @@ struct Item {
     char name[50];
     float price;
     int quantity;
-}orders[50];
-int ordercount = 0,max=50;
-int f=0,r=0;
+} orders[50];
+
+int ordercount = 0, max = 50;
+int f = 0, r = 0;
 
 void addItem() {
     if (ordercount >= max) {
-        printf("orders is full! cannot add more items.\n");
+        printf("\n----------------------------------\n");
+        printf(" Orders are full! Cannot add more items.\n");
+        printf("----------------------------------\n\n");
         return;
     }
-    
-    printf("Enter Item ID: ");
-    scanf("%d", &orders[ordercount].id);
 
+    orders[ordercount].id = ordercount + 100;
     printf("Enter Item Name: ");
     scanf("%s", orders[ordercount].name);
 
@@ -32,122 +32,140 @@ void addItem() {
 
     ordercount++;
     r++;
-    printf("Item added successfully!\n");
-    
+
+    printf("\n----------------------------------\n");
+    printf(" Item added successfully!\n");
+    printf("----------------------------------\n\n");
 }
 
-void process(){
+void process() {
     if (f < 0) {
-        printf("orders is empty!\n");
+        printf("\n----------------------------------\n");
+        printf(" Orders are empty!\n");
+        printf("----------------------------------\n\n");
         return;
     }
-    if(f==r){
-        f=0;
-        r=0;
-    }else{
-    int y=orders[f].id;
-    f++;
-    printf("your order is completed,order id:%d\n",y);
-    ordercount--;
-    }
+    if (f == r) {
+        f = 0;
+        r = 0;
+    } else {
+        int y = orders[f].id;
+        f++;
+        ordercount--;
 
+        printf("\n----------------------------------\n");
+        printf(" Your order has been completed!\n Order ID: %d\n", y);
+        printf("----------------------------------\n\n");
+    }
 }
 
-
-void deleteitem(int id){
-    int i,flag=0;
-    for(i=0;i<ordercount;i++){
-        if(orders[i].id=id){
-            flag=1;
+void deleteitem(int id) {
+    int i, flag = 0;
+    for (i = 0; i < ordercount; i++) {
+        if (orders[i].id == id) {
+            flag = 1;
             break;
         }
     }
-    if(flag == 1) {
-        for(int j = i; j < ordercount - 1; j++){
+    if (flag == 1) {
+        for (int j = i; j < ordercount - 1; j++) {
             orders[j] = orders[j + 1];
-            
         }
         r--;
         ordercount--;
-        printf("Item deleted successfully!\n");
+
+        printf("\n----------------------------------\n");
+        printf(" Item deleted successfully!\n");
+        printf("----------------------------------\n\n");
     } else {
-        printf("Item not found!\n");
+        printf("\n----------------------------------\n");
+        printf(" Item not found!\n");
+        printf("----------------------------------\n\n");
     }
 }
 
-void search(int id){
-    int i,flag=0;
+void search(int id) {
+    int i, flag = 0;
 
-    printf("ID\tName\tPrice\tQuantity\n");
-    for(i=0;i<ordercount;i++){
-        if(orders[i].id==id){
-            flag=1;
-        printf("%d\t%s\t%.2f\t%d\n", orders[i].id, orders[i].name, orders[i].price, orders[i].quantity);
-        break;
+    printf("\n----------------------------------\n");
+    printf(" ID\tName\t\tPrice\tQuantity\n");
+    printf("----------------------------------\n");
+
+    for (i = 0; i < ordercount; i++) {
+        if (orders[i].id == id) {
+            flag = 1;
+            printf(" %d\t%s\t\t%.2f\t%d\n", orders[i].id, orders[i].name, orders[i].price, orders[i].quantity);
+            break;
+        }
     }
+    if (flag == 0) {
+        printf("\n Item not found!\n");
     }
-    if(flag==0){
-        printf("item not found\n");
-    }
+
+    printf("----------------------------------\n\n");
 }
 
 void display() {
     if (ordercount == 0) {
-        printf("orders is empty!\n");
+        printf("\n----------------------------------\n");
+        printf(" Orders are empty!\n");
+        printf("----------------------------------\n\n");
         return;
     }
 
-    printf("\n Current orders:\n");
-    printf("ID\tName\t\tPrice\tQuantity\n");
-    printf("------------------------------------\n");
+    printf("\n----------------------------------\n");
+    printf(" Current Orders:\n");
+    printf(" ID\tName\t\tPrice\tQuantity\n");
+    printf("----------------------------------\n");
 
     for (int i = f; i < r; i++) {
-        printf("%d\t%s\t\t%.2f\t%d\n", orders[i].id, orders[i].name, orders[i].price, orders[i].quantity);
+        printf(" %d\t%s\t\t%.2f\t%d\n", orders[i].id, orders[i].name, orders[i].price, orders[i].quantity);
     }
+
+    printf("----------------------------------\n\n");
 }
 
-
-
 int main() {
-    printf("welcome to orders managemnt\n");
-    int val,id;
+    printf("\n==================================\n");
+    printf("     Welcome to Order Management   ");
+    printf("\n==================================\n");
 
-    while (1)
-    {
-        printf(" 1) insert orders\n 2) delete orders\n 3) serching orders\n 5) display orders\n7) process 6) exit\n ");
-        scanf(" %d", &val);
+    int val, id;
 
-        switch (val)
-        {
-        case 1:
-            addItem();
-            break;
-        case 2:
-            printf("enter id for delete orders\n");
-            scanf("%d", &id);
-            deleteitem(id);
-            break;
-        case 3:
-            printf("enter id for search orders");
-            scanf("%d", &id);
-            search(id);
-            break;
+    while (1) {
+        printf("\n----------------------------------\n");
+        printf(" 1) Insert Order\n 2) Delete Order\n 3) Search Order\n 5) Display Orders\n 7) Process Order\n 6) Exit\n");
+        printf("----------------------------------\n");
+        printf(" Enter your choice: ");
+        scanf("%d", &val);
 
-        case 5:
-            display();
-            break;
-        case 6:
-            return 0;
-            break;
-        case 7:
-            process();
-            break;
-        default:
-            printf("invalied");
+        switch (val) {
+            case 1:
+                addItem();
+                break;
+            case 2:
+                printf("\nEnter ID to delete order: ");
+                scanf("%d", &id);
+                deleteitem(id);
+                break;
+            case 3:
+                printf("\nEnter ID to search order: ");
+                scanf("%d", &id);
+                search(id);
+                break;
+            case 5:
+                display();
+                break;
+            case 6:
+                printf("\n Exiting the program...\n");
+                return 0;
+            case 7:
+                process();
+                break;
+            default:
+                printf("\n Invalid choice! Please try again.\n");
         }
     }
-    
-
 
     return 0;
 }
