@@ -125,6 +125,40 @@ void display() {
     printf("----------------------------------\n\n");
 }
 
+#include <stdio.h>
+
+void print(int id) {
+    int i, flag = 0;
+    
+    // Assuming ordercount and orders are defined elsewhere in the code
+    // Example:
+    // order orders[] = { ... };  // Orders are stored here
+    
+    for (i = 0; i < ordercount; i++) {
+        if (orders[i].id == id) {
+            flag = 1;
+            break;
+        }
+    }
+
+    if (flag == 1) {
+        printf("\n------------------------------------------------------\n");
+        printf("                 BILL SUMMARY\n");
+        printf("------------------------------------------------------\n");
+        printf(" Order ID     : %d\n", orders[i].id);
+        printf(" Order Name   : %s\n", orders[i].name);
+        printf(" Quantity     : %d\n", orders[i].quantity);
+        printf(" Price        : %.2f\n", orders[i].price);
+        printf(" Total Price  : %.2f\n", orders[i].price * orders[i].quantity);
+        printf("------------------------------------------------------\n");
+    } else {
+        printf("\n------------------------------------------------------\n");
+        printf("                    NOT FOUND\n");
+        printf("------------------------------------------------------\n");
+    }
+}
+
+
 int main() {
     printf("\n==================================\n");
     printf("     Welcome to Order Management   ");
@@ -134,7 +168,7 @@ int main() {
 
     while (1) {
         printf("\n----------------------------------\n");
-        printf(" 1) Insert Order\n 2) Delete Order\n 3) Search Order\n 5) Display Orders\n 7) Process Order\n 6) Exit\n");
+        printf(" 1) Insert Order\n 2) Delete Order\n 3) Search Order\n 5) Display Orders\n 7) Process Order\n 8) print bill \n 6) Exit\n");
         printf("----------------------------------\n");
         printf(" Enter your choice: ");
         scanf("%d", &val);
@@ -161,6 +195,11 @@ int main() {
                 return 0;
             case 7:
                 process();
+                break;
+             case 8:
+                printf("\nEnter ID to search order: ");
+                scanf("%d", &id);
+                print(id);
                 break;
             default:
                 printf("\n Invalid choice! Please try again.\n");
